@@ -1,4 +1,12 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
+
+export const useTextField = initialValue => {
+  const [value, setValue] = useState(initialValue);
+  const [isFocused, setIsFocused] = useState(false);
+  const isValid = useMemo(() => !!value, [value]);
+
+  return { value, setValue, isFocused, setIsFocused, isValid };
+};
 
 export const TextField = ({ value, setValue, setIsFocused, isValid }) => (
   <input
