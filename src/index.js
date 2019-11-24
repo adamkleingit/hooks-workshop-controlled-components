@@ -1,19 +1,26 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import ReactDOM from "react-dom";
-import { TextField, useTextField } from "./TextField";
+import { TextField } from "./TextField";
 import "./styles.css";
 
 function App() {
-  const textField = useTextField("Erase me");
+  const [value, setValue] = useState("Erase me");
+  const [isFocused, setIsFocused] = useState(false);
+  const isValid = useMemo(() => !!value, [value]);
 
-  const reset = () => textField.setValue("Erase me");
+  const reset = () => setValue("Erase me");
 
   return (
     <div className="App">
-      <TextField {...textField} />
-      <button disabled={!textField.isValid}>Submit</button>
+      <TextField
+        value={value}
+        setValue={setValue}
+        setIsFocused={setIsFocused}
+        isValid={isValid}
+      />
+      <button disabled={!isValid}>Submit</button>
       <h3>we can access the component's "internal state":</h3>
-      {textField.isFocused ? "Focused" : "Blurred"}
+      {isFocused ? "Focused" : "Blurred"}
       <button onClick={reset}>Reset</button>
       <hr />
       <h1>Hooks are awesome!</h1>
